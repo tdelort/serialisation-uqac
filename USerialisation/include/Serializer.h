@@ -7,6 +7,10 @@ public:
     Serializer(unsigned int size);
     ~Serializer();
 
+
+    template<typename T>
+    char* Compressor(T t);
+
     //template magique serialize
 
     //Getters

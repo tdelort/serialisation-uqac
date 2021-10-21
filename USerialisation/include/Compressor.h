@@ -6,7 +6,8 @@ template<typename T>
 class Compressor
 {
 public:
-    virtual char* operator()(Serializer s, T val) = 0;
+    virtual void Compress(Serializer s, T val) = 0;
+    virtual void Decompress(Serializer s, T val) = 0;
 };
 
 /*

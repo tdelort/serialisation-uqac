@@ -14,7 +14,7 @@ IntCompressor::~IntCompressor()
 
 }
 
-void IntCompressor::operator()(Serializer s, int val)
+void IntCompressor::Compress(Serializer s, int val)
 {
     int scaledInt = val - m_min;
     int nbOctet = nbOctet(m_maxRange);
@@ -45,5 +45,9 @@ void IntCompressor::operator()(Serializer s, int val)
             break;
         }
     }
+}
 
+void IntCompressor::Decompress(Serializer s, int val)
+{
+    
 }

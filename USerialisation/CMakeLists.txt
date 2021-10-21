@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(USerialisation)
 
-add_library(USocket STATIC
+add_library(USerialisation STATIC
         src/Serializer.cpp
         src/Deserializer.cpp
 )

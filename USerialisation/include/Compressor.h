@@ -9,12 +9,3 @@ public:
     virtual void Compress(Serializer s, T val) = 0;
     virtual void Decompress(Serializer s, T val) = 0;
 };
-
-/*
-
-Compressor c;
-
-char* data = c(s, val);
-
-
-*/

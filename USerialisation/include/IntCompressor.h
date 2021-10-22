@@ -12,3 +12,4 @@ public:
 
     char* operator()(Serializer s, int val) override;
 };
+

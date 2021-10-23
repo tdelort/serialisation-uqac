@@ -1,20 +1,24 @@
 #pragma once
 
+#include <vector>
+
 class Serializer
 {
 public:
-    Serializer();
-    Serializer(unsigned int size);
+    Serializer(unsigned int size = 0);
     ~Serializer();
 
-
     template<typename T>
-    char* Compressor(T t);
-
-    //template magique serialize
+    void Serialize(T val);
 
     //Getters
+    std::vector<char> GetBuffer();
+
 private:
-    // A container
-    // A position (iterator on the container)
+    std::vector<char> m_container;
+
+    unsigned int m_size;
+
+    void Write(const char* data, unsigned int size);
+
 };

@@ -12,5 +12,6 @@ public:
     QuatCompressor(float min, float max, int precision);
     ~QuatCompressor();
 
-    void operator()(Serializer s, Quaternion val) override;
+    void Compress(Serializer s, Quaternion val) override;
+    void Decompress(Serializer s, Quaternion val) override;
 };

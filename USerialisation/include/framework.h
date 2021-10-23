@@ -30,8 +30,7 @@ inline int nbOctet(int mr)
 inline int quatOctet(int valx, int valy, int valz, int start, int precision, int min) 
 {
     return ((start << 30) | 
-        (static_cast<int> ((val.x - min) * precision)) << 20) | 
-        (static_cast<int> ((val.y - min) * precision)) << 10) | 
-        (static_cast<int> ((val.z - min) * precision)))
-    )
+        (static_cast<int> ((valx - min) * precision) << 20) | 
+        (static_cast<int> ((valy - min) * precision) << 10) | 
+        (static_cast<int> ((valz - min) * precision)));
 }

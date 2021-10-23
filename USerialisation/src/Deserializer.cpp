@@ -20,10 +20,6 @@ T Deserializer::Deserialize()
     }
 
     T val = *(T*)(m_buffer + m_pos);
-    std::cout << "nbOctet : " << nbOctet << std::endl;
-    std::cout << "sizeof val : " << sizeof(val) << std::endl;
-    std::cout << "sizeof T : " << sizeof(T) << std::endl;
-    std::cout << "pos : " << m_pos << std::endl;
     m_pos += nbOctet;
     return val;
 }

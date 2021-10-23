@@ -22,28 +22,22 @@ void QuatCompressor::operator()(Serializer s, Quaternion val) override
 		uint32_t res = quatOctet(val.x, val.y, val.z, ignore, m_precision, m_min);
 		s.Serialize(res);
 	}
-	else 
+	else if (max_val == val.z)
 	{
-		if (max_val == val.z)
-		{
-			ignore = 0b10;
-			uint32_t res = quatOctet(val.x, val.y, val.w, ignore, m_precision, m_min);
-			s.Serialize(res);
-		}
-		else 
-		{
-			if (max_val == val.y)
-			{
-				ignore = 0b01;
-				uint32_t res = quatOctet(val.x, val.w, val.z, ignore, m_precision, m_min);
-				s.Serialize(res);
-			}
-			else
-			{
-				ignore = 0b00;
-				uint32_t res = quatOctet(val.w, val.y, val.z, ignore, m_precision, m_min);
-				s.Serialize(res);
-			}
-		}
+		ignore = 0b10;
+		uint32_t res = quatOctet(val.x, val.y, val.w, ignore, m_precision, m_min);
+		s.Serialize(res);		
+	}
+	else if (max_val == val.y)
+	{
+		ignore = 0b01;
+		uint32_t res = quatOctet(val.x, val.w, val.z, ignore, m_precision, m_min);
+		s.Serialize(res);
+	}
+	else
+	{
+		ignore = 0b00;
+		uint32_t res = quatOctet(val.w, val.y, val.z, ignore, m_precision, m_min);
+		s.Serialize(res);
 	}
 }

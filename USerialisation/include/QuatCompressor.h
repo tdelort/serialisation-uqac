@@ -13,5 +13,5 @@ public:
     ~QuatCompressor();
 
     void Compress(Serializer s, Quaternion val) override;
-    void Decompress(Serializer s, Quaternion val) override;
+    Quaternion Decompress(Deserializer ds) override;
 };

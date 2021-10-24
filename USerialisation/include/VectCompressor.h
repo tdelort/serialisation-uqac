@@ -15,5 +15,5 @@ public:
     ~VectCompressor();
 
     void Compress(Serializer s, Vector3D val) override;
-    void Decompress(Serializer s, Vector3D val) override;
+    Vector3D Decompress(Deserializer ds) override;
 };

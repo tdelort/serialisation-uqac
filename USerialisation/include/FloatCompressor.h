@@ -12,5 +12,5 @@ public:
     ~FloatCompressor();
 
     void Compress(Serializer s, float val) override;
-    void Decompress(Serializer s, float val) override;
+    float Decompress(Deserializer ds) override;
 };

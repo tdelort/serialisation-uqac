@@ -1,6 +1,7 @@
 #include "QuatCompressor.h"
 
 #include "Serializer.h"
+#include "Deserializer.h"
 
 #include <algorithm>
 
@@ -44,4 +45,10 @@ void QuatCompressor::Compress(Serializer s, Quaternion val)
 		uint32_t res = quatOctet(val.w, val.y, val.z, ignore, m_precision, m_min);
 		s.Serialize(res);
 	}
+}
+
+Quaternion QuatCompressor::Decompress(Deserializer ds)
+{
+	Quaternion q;
+	return q; // Normal que ça râle, j'y ai pas encore touché
 }

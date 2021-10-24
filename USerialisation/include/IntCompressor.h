@@ -12,6 +12,6 @@ public:
     ~IntCompressor();
 
     void Compress(Serializer s, int val) override;
-    void Decompress(Serializer s, int val) override;
+    int Decompress(Deserializer ds) override;
 };
 

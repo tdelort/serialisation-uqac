@@ -28,15 +28,16 @@ inline int nbOctet(int mr)
     return 1 + (mr > UINT8_MAX) + (mr > UINT16_MAX) + (mr > UINT32_MAX);
 }
 
-inline int quatOctet(int valx, int valy, int valz, int start, int precision, int min) 
+inline uint32_t quatOctet(float valx, float valy, float valz, int start, int precision, float min) 
 {
-    return ((start << 30) | 
-        (static_cast<int> ((valx - min) * precision) << 20) | 
-        (static_cast<int> ((valy - min) * precision) << 10) | 
-        (static_cast<int> ((valz - min) * precision)));
+    int a = (start & 0b11);
+    int b = (static_cast<int>((valx - min) * precision) & 0x3FF);
+    int c = (static_cast<int>((valy - min) * precision) & 0x3FF);
+    int d = (static_cast<int>((valz - min) * precision) & 0x3FF);
+    return (a << 30) | (b << 20) | (c << 10) | d;
 }
 
-inline Quaternion result(float valx, float valy, float valz, float valw, int precision, int min)
+inline Quaternion result(float valx, float valy, float valz, float valw, int precision, float min)
 {
     return {
         (valx / precision) + min,

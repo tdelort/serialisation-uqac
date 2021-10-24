@@ -15,12 +15,13 @@ int main()
     int vie = 12;
     float money = -64008.09;
     Vector3D position = {12.512f, -40.0f, 1.0f};
+    // Euler(45, 180, 65) = Quat(0.4964001, 0.7791921, 0.3227519, -0.2056157)
+    Quaternion rotation = {0.4964001f, 0.7791921f, 0.3227519f, -0.2056157f};
 
     std::cout << "vie : " << vie << std::endl;
     std::cout << "money : " << money << std::endl;
-    std::cout << "pos : " << position.x << " " << position.y << " " << position.z << std::endl << std::endl;
-    // Euler(45, 180, 65) = Quat(0.4964001, 0.7791921, 0.3227519, -0.2056157)
-    Quaternion rotation = {0.4964001f, 0.7791921f, 0.3227519f, -0.2056157f};
+    std::cout << "pos : " << position.x << " " << position.y << " " << position.z << std::endl;
+    std::cout << "rot : " << rotation.x << " " << rotation.y << " " << rotation.z << " " << rotation.w << std::endl << std::endl;
 
     IntCompressor vieComp(0, 300);
     FloatCompressor moneyComp(-99999.99, 99999.99, 3);

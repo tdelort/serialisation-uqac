@@ -1,5 +1,9 @@
 #include <Serializer.h>
 #include <Deserializer.h>
+#include <IntCompressor.h>
+#include <FloatCompressor.h>
+#include <VectCompressor.h>
+#include <QuatCompressor.h>
 #include <framework.h>
 
 #include <iostream>
@@ -8,27 +12,45 @@ int main()
 {
     Serializer s(4);
 
-    s.Serialize((uint8_t)0x61);
-    s.Serialize((uint16_t)0x6162);
-    s.Serialize((uint32_t)0x61626364);
-    s.Serialize((uint64_t)0X6162636465666768);
+    int vie = 12;
+    float money = -64008.09;
+    Vector3D position = {12.512f, -40.0f, 1.0f};
 
-    std::vector<char> buffer = s.GetBuffer();
+    std::cout << "vie : " << vie << std::endl;
+    std::cout << "money : " << money << std::endl;
+    std::cout << "pos : " << position.x << " " << position.y << " " << position.z << std::endl << std::endl;
+    // Euler(45, 180, 65) = Quat(0.4964001, 0.7791921, 0.3227519, -0.2056157)
+    //Quaternion rotation = {0.4964001f, 0.7791921f, 0.3227519f, -0.2056157f};
 
-    for(char c : buffer)
-        std::cout << (c ? c : '.');
-    std::cout << std::endl;
+    IntCompressor vieComp(0, 300);
+    FloatCompressor moneyComp(-99999.99, 99999.99, 3);
+    VectCompressor positionComp({-500, -500, 0}, {500, 500, 100}, {3, 3, 3});
+    //QuatCompressor rotationComp;
 
-    Deserializer ds(buffer.data(), buffer.size());
-    uint8_t a = ds.Deserialize<uint8_t>();
-    uint16_t b = ds.Deserialize<uint16_t>();
-    uint32_t c = ds.Deserialize<uint32_t>();
-    uint64_t d = ds.Deserialize<uint64_t>();
+    vieComp.Compress(&s, vie);
+    moneyComp.Compress(&s, 12.512f);
+    positionComp.Compress(&s, position);
+    //rotationComp.Compress(&s, rotation);
 
-    std::cout << std::hex << (int)a << std::endl;
-    std::cout << std::hex << b << std::endl;
-    std::cout << std::hex << c << std::endl;
-    std::cout << std::hex << d << std::endl;
+    char* buffer = s.GetBuffer();
+    unsigned int bufferSize = s.GetBufferSize();
+    // Send s through Socket
+
+    for(int i = 0; i < bufferSize; i++)
+        std::cout << (buffer[i] ? buffer[i] : '.');
+    std::cout << std::endl << std::endl;
+
+    Deserializer ds(buffer, bufferSize);
+
+    int n_vie = vieComp.Decompress(&ds);
+    float n_money = moneyComp.Decompress(&ds);
+    Vector3D n_position = positionComp.Decompress(&ds);
+    //Quaternion n_rotation = rotationComp.Decompress(&ds);
+
+    std::cout << "vie : " << n_vie << std::endl;
+    std::cout << "money : " << n_money << std::endl;
+    std::cout << "pos : " << n_position.x << " " << n_position.y << " " << n_position.z << std::endl;
+    //Print for quaternion
 
     return 0;
 }

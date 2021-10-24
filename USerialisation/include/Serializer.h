@@ -12,7 +12,8 @@ public:
     void Serialize(T val);
 
     //Getters
-    std::vector<char> GetBuffer();
+    char* GetBuffer();
+    unsigned int GetBufferSize();
 
 private:
     std::vector<char> m_container;

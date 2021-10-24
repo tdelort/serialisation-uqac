@@ -25,9 +25,14 @@ template void Serializer::Serialize<uint16_t>(uint16_t val);
 template void Serializer::Serialize<uint32_t>(uint32_t val);
 template void Serializer::Serialize<uint64_t>(uint64_t val);
 
-std::vector<char> Serializer::GetBuffer()
+char* Serializer::GetBuffer()
 {
-    return m_container;
+    return m_container.data();
+}
+
+unsigned int Serializer::GetBufferSize()
+{
+    return m_size;
 }
 
 void Serializer::Write(const char* data, unsigned int size)

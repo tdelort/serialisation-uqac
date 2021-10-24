@@ -16,7 +16,7 @@ FloatCompressor::~FloatCompressor()
 	//plus tard
 }
 
-void FloatCompressor::Compress(Serializer s, float val)
+void FloatCompressor::Compress(Serializer* s, float val)
 {
 	int min = 0;
 	int value = static_cast<int> ((val - m_min) * m_precision);
@@ -25,52 +25,56 @@ void FloatCompressor::Compress(Serializer s, float val)
     {
         case 1:
         {
-            s.Serialize(static_cast<uint8_t>(value));
+            s->Serialize(static_cast<uint8_t>(value));
+            break;
         }
         case 2:
         {
-            s.Serialize(static_cast<uint16_t>(value));
+            s->Serialize(static_cast<uint16_t>(value));
+            break;
         }
         case 3:
         {
-            s.Serialize(static_cast<uint32_t>(value));
+            s->Serialize(static_cast<uint32_t>(value));
+            break;
         }
         case 4:
         {
-            s.Serialize(static_cast<uint64_t>(value));
+            s->Serialize(static_cast<uint64_t>(value));
+            break;
         }
     }
 }
 
-float FloatCompressor::Decompress(Deserializer ds)
+float FloatCompressor::Decompress(Deserializer* ds)
 {
     float value;
     switch (nbOctet(m_maxRange))
     {
         case 1 :
         {
-            uint8_t recup = ds.Deserialize<uint8_t>();
+            uint8_t recup = ds->Deserialize<uint8_t>();
             value = static_cast<float>(recup);
             break;
         }
         case 2 :
         {
-            uint16_t recup = ds.Deserialize<uint16_t>();
+            uint16_t recup = ds->Deserialize<uint16_t>();
             value = static_cast<float>(recup);
             break;
         }
         case 3 :
         {
-            uint32_t recup = ds.Deserialize<uint32_t>();
+            uint32_t recup = ds->Deserialize<uint32_t>();
             value = static_cast<float>(recup);
             break;
         }
         case 4 :
         {
-            uint64_t recup = ds.Deserialize<uint64_t>();
+            uint64_t recup = ds->Deserialize<uint64_t>();
             value = static_cast<float>(recup);
             break;
         }
     }
-    return value/m_precision + m_min;
+    return value / m_precision + m_min;
 }

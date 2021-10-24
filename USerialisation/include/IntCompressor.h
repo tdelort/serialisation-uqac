@@ -11,7 +11,7 @@ public:
     IntCompressor(int min, int max);
     ~IntCompressor();
 
-    void Compress(Serializer s, int val) override;
-    int Decompress(Deserializer ds) override;
+    void Compress(Serializer* s, int val) override;
+    int Decompress(Deserializer* ds) override;
 };
 

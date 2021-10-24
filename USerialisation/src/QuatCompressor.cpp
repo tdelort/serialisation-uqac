@@ -51,10 +51,10 @@ Quaternion QuatCompressor::Decompress(Deserializer* ds)
 {
 	uint32_t value = ds->Deserialize<uint32_t>();
 	int ignore = (value >> 30);
-	float x;
-	float y;
-	float z;
-	float w;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+	float w = 0;
 	Quaternion q;
 	if (ignore == 00) 
 	{

@@ -49,52 +49,40 @@ void QuatCompressor::Compress(Serializer* s, Quaternion val)
 
 Quaternion QuatCompressor::Decompress(Deserializer* ds)
 {
-	Quaternion q;
 	uint32_t value = ds->Deserialize<uint32_t>();
 	int ignore = (value >> 30);
+	float x;
+	float y;
+	float z;
+	float w;
 	if (ignore == 00) 
 	{
-		float z = value & 0x3FF;
-		float y = (value >> 10) & 0x3FF;
-		float w = (value >> 20) & 0x3FF;
-		float x = 1 - y * y - z * z - w * w;
-		q.x = (x / m_precision) + m_min;
-		q.y = (y / m_precision) + m_min;
-		q.z = (z / m_precision) + m_min;
-		q.w = (w / m_precision) + m_min;
+		z = value & 0x3FF;
+		y = (value >> 10) & 0x3FF;
+		w = (value >> 20) & 0x3FF;
+		x = 1 - y * y - z * z - w * w;
 	}
 	else if (ignore == 01)
 	{
-		float z = value & 0x3FF;
-		float w = (value >> 10) & 0x3FF;
-		float x = (value >> 20) & 0x3FF;
-		float y = 1 - x * x - z * z - w * w;
-		q.x = (x / m_precision) + m_min;
-		q.y = (y / m_precision) + m_min;
-		q.z = (z / m_precision) + m_min;
-		q.w = (w / m_precision) + m_min;
+		z = value & 0x3FF;
+		w = (value >> 10) & 0x3FF;
+		x = (value >> 20) & 0x3FF;
+		y = 1 - x * x - z * z - w * w;
 	}
 	else if (ignore == 10)
 	{
-		float w = value & 0x3FF;
-		float y = (value >> 10) & 0x3FF;
-		float x = (value >> 20) & 0x3FF;
-		float z = 1 - x * x - y * y - w * w;
-		q.x = (x / m_precision) + m_min;
-		q.y = (y / m_precision) + m_min;
-		q.z = (z / m_precision) + m_min;
-		q.w = (w / m_precision) + m_min;
+		w = value & 0x3FF;
+		y = (value >> 10) & 0x3FF;
+		x = (value >> 20) & 0x3FF;
+		z = 1 - x * x - y * y - w * w;
 	}
 	else
 	{
-		float z = value & 0x3FF;
-		float y = (value >> 10) & 0x3FF;
-		float x = (value >> 20) & 0x3FF;
-		float w = 1 - x * x - z * z - z * z;
-		q.x = (x / m_precision) + m_min;
-		q.y = (y / m_precision) + m_min;
-		q.z = (z / m_precision) + m_min;
-		q.w = (w / m_precision) + m_min;
+		z = value & 0x3FF;
+		y = (value >> 10) & 0x3FF;
+		x = (value >> 20) & 0x3FF;
+		w = 1 - x * x - z * z - z * z;
 	}
+	Quaternion q = result(x, y, z, w, m_precision, m_min);
 	return q; // Normal que ça râle, j'y ai pas encore touché
 }

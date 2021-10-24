@@ -35,7 +35,13 @@ inline int quatOctet(int valx, int valy, int valz, int start, int precision, int
         (static_cast<int> ((valy - min) * precision) << 10) | 
         (static_cast<int> ((valz - min) * precision)));
 }
-inline Quaternion test()
+
+inline Quaternion result(float valx, float valy, float valz, float valw, int precision, int min)
 {
-    return {0, 0, 0, 0};
+    return {
+        (valx / precision) + min,
+        (valy / precision) + min,
+        (valz / precision) + min,
+        (valw / precision) + min
+    };
 }

@@ -9,7 +9,7 @@ private:
     float m_min, m_max;
     int m_precision;
 public:
-    QuatCompressor(float min, float max, int precision);
+    QuatCompressor();
     ~QuatCompressor();
 
     void Compress(Serializer* s, Quaternion val) override;

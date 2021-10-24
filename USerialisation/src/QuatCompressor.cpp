@@ -5,11 +5,11 @@
 
 #include <algorithm>
 
-QuatCompressor::QuatCompressor(float min, float max, int precision)
+QuatCompressor::QuatCompressor()
 {
-	m_min = min;
-	m_max = max;
-	m_precision = precision;
+	m_min = -0.707;
+	m_max = 0.707;
+	m_precision = 1000 * 1414 / 1023;
 }
 
 QuatCompressor::~QuatCompressor()

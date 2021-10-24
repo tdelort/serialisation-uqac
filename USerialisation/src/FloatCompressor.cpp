@@ -6,7 +6,8 @@ FloatCompressor::FloatCompressor(float min, float max, int precision)
 {
 	m_min = min;
 	m_max = max;
-	m_precision = precision;
+    m_maxRange = maxRange(m_min, m_max, precision);
+	m_precision = std::pow(10,precision);
 }
 
 FloatCompressor::~FloatCompressor()
@@ -17,9 +18,8 @@ FloatCompressor::~FloatCompressor()
 void FloatCompressor::Compress(Serializer s, float val)
 {
 	int min = 0;
-	int max = maxRange(m_min, m_max, m_precision);
 	int value = static_cast<int> ((val - m_min) * m_precision);
-	int comp = nbOctet(max);
+	int comp = nbOctet(m_maxRange);
     switch (comp)
     {
         case 1:

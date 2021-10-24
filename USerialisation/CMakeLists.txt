@@ -6,6 +6,10 @@ project(USerialisation)
 add_library(USerialisation STATIC
         src/Serializer.cpp
         src/Deserializer.cpp
+        src/FloatCompressor.cpp
+        src/IntCompressor.cpp
+        src/QuatCompressor.cpp
+        src/VectCompressor.cpp
 )
 
 target_include_directories(USerialisation PUBLIC include)

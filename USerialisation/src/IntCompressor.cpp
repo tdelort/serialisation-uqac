@@ -7,7 +7,6 @@ IntCompressor::IntCompressor(int min, int max)
     m_min = min;
     m_max = max;
     m_maxRange = maxRange(min, max);
-    
 }
 
 IntCompressor::~IntCompressor()

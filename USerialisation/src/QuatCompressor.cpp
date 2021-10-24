@@ -55,34 +55,38 @@ Quaternion QuatCompressor::Decompress(Deserializer* ds)
 	float y;
 	float z;
 	float w;
+	Quaternion q;
 	if (ignore == 00) 
 	{
 		z = value & 0x3FF;
 		y = (value >> 10) & 0x3FF;
 		w = (value >> 20) & 0x3FF;
-		x = 1 - y * y - z * z - w * w;
+		q = result(x, y, z, w, m_precision, m_min);
+		q.x = 1 - q.y * q.y - q.z * q.z - q.w * q.w;
 	}
 	else if (ignore == 01)
 	{
 		z = value & 0x3FF;
 		w = (value >> 10) & 0x3FF;
 		x = (value >> 20) & 0x3FF;
-		y = 1 - x * x - z * z - w * w;
+		q = result(x, y, z, w, m_precision, m_min);
+		q.y = 1 - q.x * q.x - q.z * q.z - q.w * q.w;
 	}
 	else if (ignore == 10)
 	{
 		w = value & 0x3FF;
 		y = (value >> 10) & 0x3FF;
 		x = (value >> 20) & 0x3FF;
-		z = 1 - x * x - y * y - w * w;
+		q = result(x, y, z, w, m_precision, m_min);
+		q.z = 1 - q.y * q.y - q.x * q.x - q.w * q.w;
 	}
 	else
 	{
 		z = value & 0x3FF;
 		y = (value >> 10) & 0x3FF;
 		x = (value >> 20) & 0x3FF;
-		w = 1 - x * x - z * z - z * z;
+		q = result(x, y, z, w, m_precision, m_min);
+		q.w = 1 - q.y * q.y - q.z * q.z - q.x * q.x;
 	}
-	Quaternion q = result(x, y, z, w, m_precision, m_min);
 	return q; // Normal que ça râle, j'y ai pas encore touché
 }

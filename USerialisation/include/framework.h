@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <cmath>
+#include <stdint.h>
 
 struct Vector3D 
 {
@@ -24,7 +25,7 @@ inline int maxRange(int min, int max, int prec = 0)
 
 inline int nbOctet(int mr) 
 {
-    return ((1 << 8) < mr) + ((1 << 16) < mr) + ((1 << 32) < mr) + ((1 << 64) < mr);
+    return 1 + (mr > UINT8_MAX) + (mr > UINT16_MAX) + (mr > UINT32_MAX);
 }
 
 inline int quatOctet(int valx, int valy, int valz, int start, int precision, int min) 

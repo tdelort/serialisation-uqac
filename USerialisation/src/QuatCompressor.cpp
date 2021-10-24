@@ -1,5 +1,9 @@
 #include "QuatCompressor.h"
 
+#include "Serializer.h"
+
+#include <algorithm>
+
 QuatCompressor::QuatCompressor(float min, float max, int precision)
 {
 	m_min = min;
@@ -12,9 +16,9 @@ QuatCompressor::~QuatCompressor()
 	//plus tard
 }
 
-void QuatCompressor::operator()(Serializer s, Quaternion val) override
+void QuatCompressor::Compress(Serializer s, Quaternion val)
 {
-	int max_val = std::max(val.x, val.y, val.z, val.w);
+	int max_val = std::max({val.x, val.y, val.z, val.w});
 	int ignore;
 	if (max_val == val.w) 
 	{

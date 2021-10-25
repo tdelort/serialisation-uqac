@@ -7,7 +7,7 @@
 #include "Player.h"
 
 
-char* Player::Write(Player p)
+std::pair<char*,int> Player::Write(Player p)
 {
     Serializer s(6);
 
@@ -25,12 +25,12 @@ char* Player::Write(Player p)
     tailleComp.Comrpess(&s, p.m_taille);
     rotationComp.Compress(&s, p.m_rotation);
 
-    return s.GetBuffer();
+    return std::make_pair(s.GetBuffer(), s.GetBufferSize());
 }
 
-Player Player::Read(char* buffer)
+Player Player::Read(char* buffer, int size)
 {
-    Desrializer ds(buffer, 6); // Pas bonne taille
+    Desrializer ds(buffer, size);
 
     IntCompressor vieComp(0, 300);
     IntCompressor armorComp(0, 50);

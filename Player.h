@@ -2,6 +2,8 @@
 
 #include "framework.h"
 
+
+
 class Player
 {
 private:
@@ -13,6 +15,6 @@ private:
     float m_argent; // argent entre -99 999,99 et 99 999,99
     std::string m_nom; // nom de max 128 char
 public:
-    static char* Write(Player p);
-    static Player Read(char* buffer);
+    static std::pair<char*,int> Write(Player p);
+    static Player Read(char* buffer, int size);
 }

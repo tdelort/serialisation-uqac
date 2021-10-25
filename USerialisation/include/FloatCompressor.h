@@ -2,15 +2,19 @@
 
 #include "Compressor.h"
 
-class FloatCompressor : public Compressor<float>
+namespace uqac::serialisation
 {
-private:
-    float m_min, m_max;
-    int m_precision, m_maxRange;
-public:
-    FloatCompressor(float min, float max, int precision);
-    ~FloatCompressor();
+    class FloatCompressor : public Compressor<float>
+    {
+    private:
+        float m_min, m_max;
+        int m_precision, m_maxRange;
+    public:
+        FloatCompressor(float min, float max, int precision);
+        ~FloatCompressor();
 
-    void Compress(Serializer* s, float val) override;
-    float Decompress(Deserializer* ds) override;
-};
+        void Compress(Serializer* s, float val) override;
+        float Decompress(Deserializer* ds) override;
+    };
+
+}

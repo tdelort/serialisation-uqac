@@ -24,7 +24,7 @@ namespace uqac::game
 
     };
 
-    std::pair<std::string,int> Write(Player p)
+    std::pair<char*,int> Write(Player p)
     {
         uqac::serialisation::Serializer s;
 
@@ -42,13 +42,14 @@ namespace uqac::game
         tailleComp.Compress(&s, p.m_taille);
         rotationComp.Compress(&s, p.m_rotation);
 
-        std::string buf = std::string(s.GetBuffer());
+        char* buf = (char*)malloc(s.GetBufferSize());
+        memcpy(buf, s.GetBuffer(), s.GetBufferSize());
         return std::make_pair(buf, s.GetBufferSize());
     }
 
-    Player Read(std::string buffer, int size)
+    Player Read(char* buffer, int size)
     {
-        uqac::serialisation::Deserializer ds(buffer.c_str(), size);
+        uqac::serialisation::Deserializer ds(buffer, size);
 
         uqac::serialisation::IntCompressor vieComp(0, 300);
         uqac::serialisation::IntCompressor armorComp(0, 50);

@@ -14,13 +14,13 @@ int main()
     p.m_taille = {1, 0.5, 2};
     p.m_rotation = {0.4964001f, 0.7791921f, 0.3227519f, -0.2056157f};
 
-    std::pair<char*, int> buffer = uqac::game::Write(p);
+    std::pair<std::string, int> buffer = uqac::game::Write(p);
 
     uqac::game::Player p2 = uqac::game::Read(buffer.first, buffer.second);
     
-    std::cout << "vie : " << p.m_vie << std::endl;
-    std::cout << "money : " << p.m_argent << std::endl;
-    std::cout << "pos : " << p.m_position.x << " " << p.m_position.y << " " << p.m_position.z << std::endl;
-    std::cout << "rot : " << p.m_rotation.x << " " << p.m_rotation.y << " " << p.m_rotation.z << " " << p.m_rotation.w << std::endl;
+    std::cout << "vie : " << p2.m_vie << std::endl;
+    std::cout << "money : " << p2.m_argent << std::endl;
+    std::cout << "pos : " << p2.m_position.x << " " << p2.m_position.y << " " << p2.m_position.z << std::endl;
+    std::cout << "rot : " << p2.m_rotation.x << " " << p2.m_rotation.y << " " << p2.m_rotation.z << " " << p2.m_rotation.w << std::endl;
 
 }

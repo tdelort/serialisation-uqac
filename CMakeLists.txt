@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 3.19)
 set(CMAKE_CXX_STANDARD 17)
 
-project(SerialisationTests)
+project(USerialisation)
 
-add_executable(TestsPlayer testsPlayer.cpp)
+add_library(USerialisation STATIC
+        src/Serializer.cpp
+        src/Deserializer.cpp
+        src/FloatCompressor.cpp
+        src/IntCompressor.cpp
+        src/QuatCompressor.cpp
+        src/VectCompressor.cpp
+)
 
-add_subdirectory(USerialisation)
-
-target_link_libraries(TestsPlayer USerialisation)
+target_include_directories(USerialisation PUBLIC include)

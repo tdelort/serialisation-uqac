@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(SerialisationTests)
 
-add_executable(TestsPlayer testsPlayer.cpp)
+add_executable(TestsPlayer tests.cpp)
 
 add_subdirectory(USerialisation)
 

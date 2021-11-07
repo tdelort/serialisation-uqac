@@ -30,28 +30,24 @@ namespace uqac::serialisation
 		{
 			ignore = 0b11;
 			uint32_t res = quatOctet(val.x, val.y, val.z, ignore, m_precision, m_min);
-			std::cout << res << " q" << std::endl;
 			s->Serialize(res);
 		}
 		else if (max_val == val.z)
 		{
 			ignore = 0b10;
 			uint32_t res = quatOctet(val.x, val.y, val.w, ignore, m_precision, m_min);
-			std::cout << res << " q" << std::endl;
 			s->Serialize(res);		
 		}
 		else if (max_val == val.y)
 		{
 			ignore = 0b01;
 			uint32_t res = quatOctet(val.x, val.w, val.z, ignore, m_precision, m_min);
-			std::cout << res << " q" << std::endl;
 			s->Serialize(res);
 		}
 		else
 		{
 			ignore = 0b00;
 			uint32_t res = quatOctet(val.w, val.y, val.z, ignore, m_precision, m_min);
-			std::cout << res << " q" << std::endl;
 			s->Serialize(res);
 		}
 	}
@@ -60,7 +56,6 @@ namespace uqac::serialisation
 	{
 		uint32_t value = ds->Deserialize<uint32_t>();
 		int ignore = (value >> 30);
-		std::cout << ignore << " i" << std::endl;
 		float x = 0;
 		float y = 0;
 		float z = 0;

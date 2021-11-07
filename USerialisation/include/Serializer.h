@@ -21,9 +21,6 @@ namespace uqac::serialisation
         std::vector<char> m_container;
 
         unsigned int m_size;
-
-        void Write(const char* data, unsigned int size);
-
     };
 
 }

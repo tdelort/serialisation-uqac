@@ -10,48 +10,44 @@
 
 int main()
 {
-    Serializer s(4);
+    uqac::serialisation::Serializer s;
+    s.Serialize<uint32_t>((uint32_t)1);
+    std::cout << "size : " << s.GetBufferSize() << std::endl;
+    s.Serialize<uint8_t>((uint8_t)1);
+    std::cout << "size : " << s.GetBufferSize() << std::endl;
+    s.Serialize<uint8_t>((uint8_t)1);
+    std::cout << "size : " << s.GetBufferSize() << std::endl;
+    s.Serialize<uint8_t>((uint8_t)1);
+    std::cout << "size : " << s.GetBufferSize() << std::endl;
+    s.Serialize<uint8_t>((uint8_t)1);
+    std::cout << "size : " << s.GetBufferSize() << std::endl;
+    s.Serialize<uint32_t>((uint32_t)1);
+    std::cout << "size : " << s.GetBufferSize() << std::endl;
 
-    int vie = 12;
-    float money = -64008.09;
-    Vector3D position = {12.512f, -40.0f, 1.0f};
-    // Euler(45, 180, 65) = Quat(0.4964001, 0.7791921, 0.3227519, -0.2056157)
-    Quaternion rotation = {0.4964001f, 0.7791921f, 0.3227519f, -0.2056157f};
-
-    std::cout << "vie : " << vie << std::endl;
-    std::cout << "money : " << money << std::endl;
-    std::cout << "pos : " << position.x << " " << position.y << " " << position.z << std::endl;
-    std::cout << "rot : " << rotation.x << " " << rotation.y << " " << rotation.z << " " << rotation.w << std::endl << std::endl;
-
-    IntCompressor vieComp(0, 300);
-    FloatCompressor moneyComp(-99999.99, 99999.99, 3);
-    VectCompressor positionComp({-500, -500, 0}, {500, 500, 100}, {3, 3, 3});
-    QuatCompressor rotationComp;
-
-    vieComp.Compress(&s, vie);
-    moneyComp.Compress(&s, 12.512f);
-    positionComp.Compress(&s, position);
-    rotationComp.Compress(&s, rotation);
-
+    std::cout << "buffer : ";
     char* buffer = s.GetBuffer();
-    unsigned int bufferSize = s.GetBufferSize();
-    // Send s through Socket
+    for(int i = 0; i < s.GetBufferSize(); i++)
+    {
+        char c = (int)buffer[i];
+        std::cout << (c ? c : '.');
+    }
+    std::cout << std::endl;
 
-    for(int i = 0; i < bufferSize; i++)
-        std::cout << (buffer[i] ? buffer[i] : '.');
-    std::cout << std::endl << std::endl;
 
-    Deserializer ds(buffer, bufferSize);
+    uqac::serialisation::Deserializer ds(s.GetBuffer(), s.GetBufferSize());
+    uint32_t i = ds.Deserialize<uint32_t>();
+    uint8_t i2 = ds.Deserialize<uint8_t>();
+    uint8_t i3 = ds.Deserialize<uint8_t>();
+    uint8_t i4 = ds.Deserialize<uint8_t>();
+    uint8_t i5 = ds.Deserialize<uint8_t>();
+    uint32_t i6 = ds.Deserialize<uint32_t>();
 
-    int n_vie = vieComp.Decompress(&ds);
-    float n_money = moneyComp.Decompress(&ds);
-    Vector3D n_position = positionComp.Decompress(&ds);
-    Quaternion n_rotation = rotationComp.Decompress(&ds);
-
-    std::cout << "vie : " << n_vie << std::endl;
-    std::cout << "money : " << n_money << std::endl;
-    std::cout << "pos : " << n_position.x << " " << n_position.y << " " << n_position.z << std::endl;
-    std::cout << "rot : " << n_rotation.x << " " << n_rotation.y << " " << n_rotation.z << " " << n_rotation.w << std::endl;
+    std::cout << "test : " << (int)i << std::endl;
+    std::cout << "test : " << (int)i2 << std::endl;
+    std::cout << "test : " << (int)i3 << std::endl;
+    std::cout << "test : " << (int)i4 << std::endl;
+    std::cout << "test : " << (int)i5 << std::endl;
+    std::cout << "test : " << (int)i6 << std::endl;
 
     return 0;
 }

@@ -1,5 +1,7 @@
 #include "Serializer.h"
 
+#include <iostream>
+
 namespace uqac::serialisation
 {
 
@@ -8,18 +10,17 @@ namespace uqac::serialisation
     { }
 
     Serializer::~Serializer()
-    {
-
-    }
+    { }
 
     template<typename T>
     void Serializer::Serialize(T val)
     {
-        unsigned int nbOctet = sizeof(val);
-        if(nbOctet + m_size > m_container.capacity())
-            m_container.resize(m_container.capacity() + nbOctet);
+        unsigned int nbOctet = sizeof(T);
+        if(nbOctet + m_size > m_container.size())
+            m_container.resize(m_size + nbOctet);
 
-        Write((char*)&val, nbOctet);
+        memcpy(m_container.data() + m_size, &val, nbOctet);
+        m_size += nbOctet;
     }
 
     // allows to define Serialize in the .cpp and restrains the types that T can be
@@ -36,11 +37,5 @@ namespace uqac::serialisation
     unsigned int Serializer::GetBufferSize()
     {
         return m_size;
-    }
-
-    void Serializer::Write(const char* data, unsigned int size)
-    {
-        memcpy(m_container.data() + m_size, data, size);
-        m_size += size;
     }
 }
